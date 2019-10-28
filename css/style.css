@@ -1,0 +1,53 @@
+body {
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    -moz-flex-direction: column;
+    -ms-flex-direction: column;
+    -o-flex-direction: column;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100vh;
+}
+
+footer {
+    padding: 18px;
+}
+
+footer {
+    color: #fff;
+    background-color: rgba(0, 0, 0, .9);
+}
+
+.post {
+    width: 100%;
+    border: 1px solid lightgrey;
+    margin-bottom: 30px;
+    padding: 18px;
+}
+
+.post * {
+    margin-bottom: 10px;
+}
+
+.post *:last-child {
+    margin-bottom: 0;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    padding: 0;
+    margin-left: 0;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background: none;
+    border: 1px solid transparent;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:active {
+    background: none;
+    box-shadow: none;
+}

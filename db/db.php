@@ -1,7 +1,7 @@
 <?php
 
 $host = 'localhost';
-$dbname = 'blog';
+$dbname = 'forum_mvc';
 $user = 'root';
 $password = 'root';
 
