@@ -4,6 +4,18 @@
     <small><?php if($post['created_at']) echo $post['created_at']; ?></small>
     <h1 class="mt-2 mb-3"><?php if(isset($post['post_title'])) echo $post['post_title']; ?></h1>
     <p><?php if(isset($post['post_text'])) echo $post['post_text']; ?></p>
+    <div>
+        <?php if(isset($_SESSION['user'])) { ?>
+            <?php if(!Like::isLiked($post['id'])) { ?>
+                <a href="/post/like/<?php if(isset($post['id'])) echo $post['id'] ?>">👍</a>
+            <?php } else { ?>
+                <a href="/post/dislike/<?php if(isset($post['id'])) echo $post['id'] ?>">👎</a>
+            <?php } ?>
+        <?php } else { ?>
+            <span>👍</span>
+        <?php } ?>
+        <span>(<?php echo Like::getLikesByPost($post['id']) ?>)</span>
+    </div>
     <hr>
     <?php if(!empty($comments)) { ?>
     <strong class="d-block mb-3">Comments</strong>

@@ -57,8 +57,24 @@ class PostController
 
     public function actionGetComments($id) {
         $comments = Comment::getCommentsByPost($id); 
-        
+
         echo json_encode($comments);
+
+        return true;
+    }
+
+    public function actionLikePost($id) {
+        Like::likePost($id);
+
+        header('Location: ' . $_SERVER['HTTP_REFERER']);
+
+        return true;
+    }
+
+    public function actionDislikePost($id) {
+        Like::dislikePost($id);
+
+        header('Location: ' . $_SERVER['HTTP_REFERER']);
 
         return true;
     }
