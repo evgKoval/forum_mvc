@@ -21,6 +21,8 @@ $routes = [
     'post/create' => 'post/create',
     'post/([0-9]+)' => 'post/show/$1',
     'post/get-comments/([0-9]+)' => 'post/getComments/$1',
+    'post/edit/([0-9]+)' => 'post/edit/$1',
+    'post/delete/([0-9]+)' => 'post/delete/$1',
 
     '' => 'index/index'
 ];

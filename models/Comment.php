@@ -6,7 +6,7 @@ class Comment
 	{
 		global $db;
 
-		$sql = 'SELECT c.comment, c.created_at, u.first_name FROM comments c LEFT JOIN users u ON c.user_id = u.id WHERE post_id = :post_id';
+		$sql = 'SELECT c.comment, c.created_at, u.first_name FROM comments c LEFT JOIN users u ON c.user_id = u.id WHERE post_id = :post_id ORDER BY created_at ASC';
 
 		$result = $db->prepare($sql);
 		$result->bindParam(':post_id', $post_id, PDO::PARAM_STR);
@@ -18,7 +18,8 @@ class Comment
 		return $comments;
 	}
 
-	public static function addComment($postId, $comment) {
+	public static function addComment($postId, $comment) 
+    {
 		global $db;
 
 		$userId = $_SESSION['user']['user_id'];
@@ -31,5 +32,11 @@ class Comment
         $result->bindParam(':comment', $comment, PDO::PARAM_STR);
 
 		$result->execute();
+
+        $authorEmail = Post::getEmailByPostId($postId);
+
+        if ($authorEmail) {
+            require ROOT . '/phpmailer/notificate_comment.php';
+        }   
 	}
 }
