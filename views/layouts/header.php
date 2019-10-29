@@ -1,3 +1,6 @@
+<?php
+?>
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -13,18 +16,14 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand mr-auto" href="/content">Blog</a>
             <nav>
-                <?php if(!isset($_SESSION['firstname'])) { ?>
+                <?php if(!isset($_SESSION['user'])) { ?>
                     <div class="btn-group" role="group">
-                        <a href="login" class="btn btn-outline-dark">Login</a>
-                        <a href="register" class="btn btn-outline-dark">Register</a>
+                        <a href="/login" class="btn btn-outline-dark">Login</a>
+                        <a href="/register" class="btn btn-outline-dark">Register</a>
                     </div>
-                <?php } ?>
-
-                <?php if(isset($_SESSION['firstname'])) { ?>
-                    <div class="btn-group" role="group">
-                        <a href="profile" class="btn btn-outline-dark">Profile</a>
-                        <a href="logout" class="btn btn-outline-dark">Logout</a>
-                    </div>
+                <?php } else { ?>
+                    <span class="mr-3"><?php if(isset($_SESSION['user']['email'])) echo $_SESSION['user']['email'] ?></span>
+                    <a href="/logout" class="btn btn-outline-dark">Logout</a>
                 <?php } ?>
             </nav>
         </nav>
