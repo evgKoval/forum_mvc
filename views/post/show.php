@@ -7,7 +7,7 @@
     <hr>
     <?php if(!empty($comments)) { ?>
     <strong class="d-block mb-3">Comments</strong>
-    <ul class="list-group">
+    <ul class="list-group comments">
         <?php foreach($comments as $comment) { ?>
             <li class="list-group-item">
                 <small class="d-block">
@@ -39,4 +39,7 @@
     <?php } else { ?>
         <strong class="d-block mt-3 mb-5"><a href="/login">Login</a> or <a href="/register">register</a> to add comment</strong>
     <?php } ?>
+    <script>
+        <?php include 'js/comment.js'; ?>
+    </script>
 <?php include ROOT . '/views/layouts/footer.php'; ?>

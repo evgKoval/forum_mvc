@@ -54,4 +54,12 @@ class PostController
         
         return true;
     }
+
+    public function actionGetComments($id) {
+        $comments = Comment::getCommentsByPost($id); 
+        
+        echo json_encode($comments);
+
+        return true;
+    }
 }
