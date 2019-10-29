@@ -18,7 +18,8 @@ class Comment
 		return $comments;
 	}
 
-	public static function addComment($postId, $comment) {
+	public static function addComment($postId, $comment) 
+    {
 		global $db;
 
 		$userId = $_SESSION['user']['user_id'];

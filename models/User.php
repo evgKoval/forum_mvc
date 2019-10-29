@@ -61,7 +61,8 @@ class User
         return false;
     }
 
-    public static function checkEmailExists($email) {
+    public static function checkEmailExists($email) 
+    {
         global $db;
 
         $sql = 'SELECT COUNT(*) FROM users WHERE email = :email';
@@ -76,7 +77,8 @@ class User
         return false;
     }
 
-    public static function getUserData($firstname, $email, $password) {
+    public static function getUserData($firstname, $email, $password) 
+    {
         global $db;
 
         $sql = 'SELECT u.email, u.is_active, p.id, p.user_id FROM users u LEFT JOIN posts p ON p.user_id = u.id WHERE first_name = :firstname AND email = :email AND password = :password';
@@ -106,7 +108,8 @@ class User
         return false;
     }
 
-    public static function confirmEmail($hash) {
+    public static function confirmEmail($hash) 
+    {
         global $db;
 
         var_dump($hash);

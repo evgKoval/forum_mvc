@@ -2,7 +2,8 @@
 
 class Like
 {
-    public static function likePost($postId) {
+    public static function likePost($postId) 
+    {
         global $db;
 
         $userId = $_SESSION['user']['user_id'];
@@ -17,7 +18,8 @@ class Like
         $result->execute();
     }
 
-    public static function dislikePost($postId) {
+    public static function dislikePost($postId) 
+    {
         global $db;
 
         $userId = $_SESSION['user']['user_id'];
@@ -31,7 +33,8 @@ class Like
         $result->execute();
     }
 
-    public static function getLikesByPost($postId) {
+    public static function getLikesByPost($postId) 
+    {
         global $db;
 
         $sql = 'SELECT COUNT(*) FROM likes WHERE post_id = :post_id';
@@ -46,7 +49,8 @@ class Like
         return $likes;
     }
 
-    public static function isLiked($postId) {
+    public static function isLiked($postId) 
+    {
         global $db;
 
         $userId = $_SESSION['user']['user_id'];

@@ -55,7 +55,8 @@ class PostController
         return true;
     }
 
-    public function actionGetComments($id) {
+    public function actionGetComments($id) 
+    {
         $comments = Comment::getCommentsByPost($id); 
 
         echo json_encode($comments);
@@ -63,7 +64,8 @@ class PostController
         return true;
     }
 
-    public function actionLikePost($id) {
+    public function actionLikePost($id) 
+    {
         Like::likePost($id);
 
         header('Location: ' . $_SERVER['HTTP_REFERER']);
@@ -71,7 +73,8 @@ class PostController
         return true;
     }
 
-    public function actionDislikePost($id) {
+    public function actionDislikePost($id) 
+    {
         Like::dislikePost($id);
 
         header('Location: ' . $_SERVER['HTTP_REFERER']);
