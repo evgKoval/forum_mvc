@@ -5,14 +5,24 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 define('ROOT', dirname(__FILE__));
+require_once(ROOT . '/Autoload.php');
+
+require_once 'db/db.php';
+$db = $db->getConnection();
 
 session_start();
 
 $routes = [
     'login' => 'auth/login',
     'register' => 'auth/register',
-    'confirm/' => 'auth/confirm/$1'
-    //'' => 'site/index'
+    'confirm/' => 'auth/confirm/$1',
+    'logout' => 'auth/logout',
+
+    'post/create' => 'post/create',
+    'post/([0-9]+)' => 'post/show/$1',
+    'post/get-comments/([0-9]+)' => 'post/getComments/$1',
+
+    '' => 'index/index'
 ];
 
 $uri;

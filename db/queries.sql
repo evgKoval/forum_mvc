@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS posts (
     post_title VARCHAR(255) NOT NULL,
     post_text TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     deleted_at DATE
 )  ENGINE=INNODB;
 

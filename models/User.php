@@ -1,9 +1,7 @@
 <?php
 
-require ROOT . '/db/db.php';
-$db = $db->getConnection();
-
-class Auth {
+class User
+{
     public static function register($firstname, $lastname, $email, $password) 
     {
         global $db;
@@ -66,7 +64,7 @@ class Auth {
     public static function checkEmailExists($email) {
         global $db;
 
-        $sql = 'SELECT COUNT(*) FROM user WHERE email = :email';
+        $sql = 'SELECT COUNT(*) FROM users WHERE email = :email';
 
         $result = $db->prepare($sql);
         $result->bindParam(':email', $email, PDO::PARAM_STR);
@@ -78,10 +76,10 @@ class Auth {
         return false;
     }
 
-    public static function checkUserData($firstname, $email, $password) {
+    public static function getUserData($firstname, $email, $password) {
         global $db;
 
-        $sql = 'SELECT * FROM users WHERE first_name = :firstname AND email = :email AND password = :password';
+        $sql = 'SELECT u.email, u.is_active, p.id, p.user_id FROM users u LEFT JOIN posts p ON p.user_id = u.id WHERE first_name = :firstname AND email = :email AND password = :password';
 
         $result = $db->prepare($sql);
         $result->bindParam(':firstname', $firstname, PDO::PARAM_STR);
@@ -89,12 +87,20 @@ class Auth {
         $result->bindParam(':password', $password, PDO::PARAM_STR);
         $result->execute();
 
-        $user = $result->fetch();
+        $user = $result->fetchAll(PDO::FETCH_ASSOC);
         if ($user) {
-            return [
-                "id" => $user['id'],
-                "is_active" => $user['is_active']
+            $userData = [
+                'is_active' => $user[0]['is_active'],
+                'email' => $user[0]['email'],
+                'user_id' => $user[0]['user_id'],
+                'posts_id' => []
             ];
+
+            foreach ($user as $data) {
+                array_push($userData['posts_id'], $data['id']);
+            }
+
+            return $userData;
         }
 
         return false;
@@ -117,5 +123,21 @@ class Auth {
     public static function authorization($userId) 
     {
         $_SESSION['user'] = $userId;
+    }
+
+    public static function getUserFirstNameById($userId) 
+    {
+        global $db;
+
+        $sql = 'SELECT first_name FROM users WHERE id = :id';
+
+        $result = $db->prepare($sql);
+        $result->bindParam(':id', $userId, PDO::PARAM_STR);
+
+        $result->execute();
+
+        $firstname = $result->fetch(PDO::FETCH_ASSOC);
+
+        return $firstname['first_name'];
     }
 }
