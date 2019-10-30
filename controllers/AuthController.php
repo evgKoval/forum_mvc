@@ -38,7 +38,11 @@ class AuthController
                     User::authorization($user);
                     
                     if ($user['is_active']) {
-                        header("Location: /");
+                        if (User::hasPreferences($_SESSION['user']['user_id'])) {
+                            header("Location: /");
+                        } else {
+                            header("Location: /preferences");
+                        }
                     } else {
                         $errors[] = 'Please check your email and verificite';
                     }

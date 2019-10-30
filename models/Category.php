@@ -47,4 +47,19 @@ class Category
 
         return $subCategories;
     }
+
+    public static function addUserPreferences($category, $subCategory) {
+        global $db;
+
+        $userId = $_SESSION['user']['user_id'];
+
+        $sql = 'INSERT INTO user_preferences (user_id, category, sub_category) ' . 'VALUES (:user_id, :category, :sub_category)';
+
+        $result = $db->prepare($sql);
+        $result->bindParam(':user_id', $userId, PDO::PARAM_STR);
+        $result->bindParam(':category', $category, PDO::PARAM_STR);
+        $result->bindParam(':sub_category', $subCategory, PDO::PARAM_STR);
+
+        $result->execute();
+    }
 }

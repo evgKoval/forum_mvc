@@ -81,7 +81,7 @@ class User
     {
         global $db;
 
-        $sql = 'SELECT u.email, u.is_active, p.id, p.user_id FROM users u LEFT JOIN posts p ON p.user_id = u.id WHERE first_name = :firstname AND email = :email AND password = :password';
+        $sql = 'SELECT u.id id_user, u.email, u.is_active, p.id, p.user_id FROM users u LEFT JOIN posts p ON p.user_id = u.id WHERE first_name = :firstname AND email = :email AND password = :password';
 
         $result = $db->prepare($sql);
         $result->bindParam(':firstname', $firstname, PDO::PARAM_STR);
@@ -94,7 +94,7 @@ class User
             $userData = [
                 'is_active' => $user[0]['is_active'],
                 'email' => $user[0]['email'],
-                'user_id' => $user[0]['user_id'],
+                'user_id' => $user[0]['id_user'],
                 'posts_id' => []
             ];
 
@@ -122,9 +122,9 @@ class User
         return $result->rowCount();
     }
 
-    public static function authorization($userId) 
+    public static function authorization($user) 
     {
-        $_SESSION['user'] = $userId;
+        $_SESSION['user'] = $user;
     }
 
     public static function isGuest() {
@@ -149,4 +149,20 @@ class User
 
         return $firstname['first_name'];
     }
+
+    public static function hasPreferences($userId)
+    {
+        global $db;
+
+        $sql = 'SELECT COUNT(*) FROM user_preferences WHERE user_id = :user_id';
+
+        $result = $db->prepare($sql);
+        $result->bindParam(':user_id', $userId, PDO::PARAM_STR);
+        $result->execute();
+
+        if ($result->fetchColumn()) {
+            return true;
+        }
+        return false;
+    } 
 }

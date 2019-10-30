@@ -19,11 +19,23 @@ class IndexController
         $subCategories = [];
         $subCategories = Category::getSubCategories();
 
-        if(isset($_POST['preferences'])) {
-            $errors = false;
-            var_dump($_POST);
+        $category = '';
+        $subCategories = [];
 
-            if (!$_POST['category'] && !$_POST['subcategory']) {
+        if(isset($_POST['preferences'])) {
+            $category = $_POST['category'];
+
+            $errors = false;
+            
+            if (isset($_POST['subcategory'])) {
+                $subCategories = $_POST['subcategory'];
+
+                foreach ($subCategories as $subCategory) {
+                    Category::addUserPreferences($category, $subCategory);
+                }
+
+                header("Location: /");
+            } else {
                 $errors[] = 'Please choose at least one';
             }
         }
