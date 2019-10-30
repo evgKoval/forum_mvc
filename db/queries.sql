@@ -82,3 +82,5 @@ CREATE TABLE IF NOT EXISTS user_preferences (
     category INT,
     sub_category INT
 )  ENGINE=INNODB;
+
+ALTER TABLE posts ADD COLUMN post_category INT;

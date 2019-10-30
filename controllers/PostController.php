@@ -33,9 +33,12 @@ class PostController
 
     public function actionCreate() 
     {
+        $categories = Category::getSubCategories();
+
         if (isset($_POST['post_create'])) {
             $title = $_POST['post_title'];
             $text = $_POST['post_text'];
+            $category = $_POST['post_category'];
 
             $errors = false;
 
@@ -44,7 +47,7 @@ class PostController
             }
 
             if ($errors == false) {
-                Post::createPost($title, $text);
+                Post::createPost($title, $text, $category);
 
                 header("Location: /");
             }

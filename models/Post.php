@@ -33,17 +33,18 @@ class Post
         return $post;
     }
 
-    public static function createPost($title, $text) 
+    public static function createPost($title, $text, $category) 
     {
         global $db;
 
         $userId = $_SESSION['user']['id'];
 
-        $sql = 'INSERT INTO posts (post_title, post_text, user_id) ' . 'VALUES (:post_title, :post_text, :user_id)';
+        $sql = 'INSERT INTO posts (post_title, post_text, post_category, user_id) ' . 'VALUES (:post_title, :post_text, :post_category, :user_id)';
 
         $result = $db->prepare($sql);
         $result->bindParam(':post_title', $title, PDO::PARAM_STR);
         $result->bindParam(':post_text', $text, PDO::PARAM_STR);
+        $result->bindParam(':post_category', $category, PDO::PARAM_INT);
         $result->bindParam(':user_id', $userId, PDO::PARAM_STR);
 
         $result->execute();

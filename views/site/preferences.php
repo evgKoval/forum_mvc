@@ -5,8 +5,8 @@
         <div class="form-group">
             <label for="category_input">Which categories do you like?</label>
             <select name="category" class="form-control" id="category_input">
-                <?php foreach($categories as $index => $category) { ?>
-                    <option value="<?php echo $index + 1; ?>">
+                <?php foreach($categories as $category) { ?>
+                    <option value="<?php if(isset($category['id'])) echo $category['id']; ?>">
                         <?php if(isset($category['name'])) echo $category['name']; ?>
                     </option>
                 <?php } ?>
