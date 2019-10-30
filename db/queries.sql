@@ -75,3 +75,10 @@ INSERT INTO sub_categories (name, parent) VALUES ('Football', 4);
 INSERT INTO sub_categories (name, parent) VALUES ('Basketball', 4);
 INSERT INTO sub_categories (name, parent) VALUES ('Volleyball', 4);
 INSERT INTO sub_categories (name, parent) VALUES ('Baseball', 4);
+
+CREATE TABLE IF NOT EXISTS user_preferences (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    category INT,
+    sub_category INT
+)  ENGINE=INNODB;

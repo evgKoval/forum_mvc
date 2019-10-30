@@ -112,7 +112,6 @@ class User
     {
         global $db;
 
-        var_dump($hash);
         $sql = 'UPDATE users SET is_active = 1 WHERE hash = :hash';
 
         $result = $db->prepare($sql);
@@ -126,6 +125,13 @@ class User
     public static function authorization($userId) 
     {
         $_SESSION['user'] = $userId;
+    }
+
+    public static function isGuest() {
+        if (!isset($_SESSION['user'])) {
+            return true;
+        }
+        return false;
     }
 
     public static function getUserFirstNameById($userId) 
