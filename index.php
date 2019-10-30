@@ -15,6 +15,7 @@ session_start();
 $routes = [
     'login' => 'auth/login',
     'register' => 'auth/register',
+    'continue' => 'auth/continue',
     'confirm/' => 'auth/confirm/$1',
     'logout' => 'auth/logout',
 
