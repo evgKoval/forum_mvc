@@ -1,4 +1,12 @@
 <?php include ROOT . '/views/layouts/header.php'; ?>
+    <div>
+        <h5 class="preferences">
+            Your preferences:
+            <?php foreach($preferences as $preference) { ?>
+                <span><?php if(isset($preference['name'])) echo $preference['name']; ?></span>
+            <?php } ?>
+        </h5>
+    </div>
     <h1 class="mb-3">All of posts</h1>
     <?php if(!User::isGuest()) { ?>
         <a href="/post/create" class="btn btn-primary">Create a post</a>

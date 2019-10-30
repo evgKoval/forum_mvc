@@ -7,6 +7,9 @@ class IndexController
 		$posts = [];
 		$posts = Post::getPosts();
 
+        $preferences = [];
+        $preferences = User::getUserPreferences();
+
 		require_once(ROOT . '/views/site/index.php');
 
 		return true;

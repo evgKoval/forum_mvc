@@ -165,4 +165,22 @@ class User
         }
         return false;
     } 
+
+    public static function getUserPreferences() 
+    {
+        global $db;
+
+        $userId = $_SESSION['user']['user_id'];
+
+        $sql = 'SELECT s.name FROM user_preferences u LEFT JOIN sub_categories s ON u.sub_category = s.id WHERE user_id = :user_id';
+
+        $result = $db->prepare($sql);
+        $result->bindParam(':user_id', $userId, PDO::PARAM_STR);
+
+        $result->execute();
+
+        $preferences = $result->fetchAll(PDO::FETCH_ASSOC);
+
+        return $preferences;
+    }
 }
