@@ -1,6 +1,6 @@
 <?php include ROOT . '/views/layouts/header.php'; ?>
     <h1 class="mb-3">All of posts</h1>
-    <?php if(isset($_SESSION['user'])) { ?>
+    <?php if(!User::isGuest()) { ?>
         <a href="/post/create" class="btn btn-primary">Create a post</a>
     <?php } ?>
     <hr>
@@ -25,7 +25,7 @@
                         <?php } ?>
                         <hr>
                         <div>
-                            <?php if(isset($_SESSION['user'])) { ?>
+                            <?php if(!User::isGuest()) { ?>
                                 <?php if(!Like::isLiked($post['id'])) { ?>
                                     <a href="/post/like/<?php if(isset($post['id'])) echo $post['id'] ?>">👍</a>
                                 <?php } else { ?>

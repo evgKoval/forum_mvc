@@ -15,7 +15,6 @@ session_start();
 $routes = [
     'login' => 'auth/login',
     'register' => 'auth/register',
-    'continue' => 'auth/continue',
     'confirm/' => 'auth/confirm/$1',
     'logout' => 'auth/logout',
 
@@ -27,6 +26,8 @@ $routes = [
     'post/edit/([0-9]+)' => 'post/edit/$1',
     'post/delete/([0-9]+)' => 'post/delete/$1',
 
+    'get-preferences/([0-9]+)' => 'index/getPreferences/$1',
+    'preferences' => 'index/preferences',
     '' => 'index/index'
 ];
 

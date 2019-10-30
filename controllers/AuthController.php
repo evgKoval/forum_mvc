@@ -103,36 +103,19 @@ class AuthController
         return true;
     }
 
-    public function actionContinue() {
-        $categories = [];
-        $categories = Category::getCategories();
-
-        $subCategories = [];
-        $subCategories = Category::getSubCategories();
-
-        if(isset($_POST['continue'])) {
-            $errors = false;
-            var_dump($_POST);
-        }
-
-        require_once(ROOT . '/views/auth/continue.php');
-        
-        return true;
-    }
-
     public function actionConfirm($hash) 
     {
         $result = User::confirmEmail($hash);
 
         if ($result) {
             $_SESSION['flash'] = 'Your email is verificated';
-            header("Location: /login");
+            header("Location: /preferences");
         } else {
             echo "Verification is wrong";
         }
     }
 
-    public function actionLogout() 
+    public function actionLogout()
     {
         unset($_SESSION["user"]);
 

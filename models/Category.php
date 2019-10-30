@@ -31,4 +31,20 @@ class Category
 
         return $subCategories;
     }
+
+    public static function getSubCategoriesByCategoryId($categoryId)
+    {
+        global $db;
+
+        $sql = 'SELECT s.id, s.name FROM categories c LEFT JOIN sub_categories s ON c.id = s.parent WHERE c.id = :id';
+
+        $result = $db->prepare($sql);
+        $result->bindParam(':id', $categoryId, PDO::PARAM_STR);
+
+        $result->execute();
+
+        $subCategories = $result->fetchAll(PDO::FETCH_ASSOC);
+
+        return $subCategories;
+    }
 }
