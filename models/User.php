@@ -22,7 +22,7 @@ class User
                 unset($_SESSION["flash"]);
             }
 
-            require ROOT . '/phpmailer/send.php';
+            Mailer::sendConfirm($email, $hash);
         }
     }
 
