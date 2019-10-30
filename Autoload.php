@@ -4,7 +4,8 @@ spl_autoload_register('autoload');
 
 function autoload($class_name) {
     $array_paths = [
-        '/models/'
+        '/models/',
+        '/phpmailer/'
     ];
 
     foreach ($array_paths as $path) {

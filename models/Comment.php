@@ -36,7 +36,7 @@ class Comment
         $authorEmail = Post::getEmailByPostId($postId);
 
         if ($authorEmail) {
-            require ROOT . '/phpmailer/notificate_comment.php';
-        }   
+            Mailer::sendNotificate($authorEmail, $postId);
+        }
 	}
 }
