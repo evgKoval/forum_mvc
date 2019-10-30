@@ -23,6 +23,8 @@ $routes = [
     'post/like/([0-9]+)' => 'post/likePost/$1',
     'post/dislike/([0-9]+)' => 'post/dislikePost/$1',
     'post/get-comments/([0-9]+)' => 'post/getComments/$1',
+    'post/edit/([0-9]+)' => 'post/edit/$1',
+    'post/delete/([0-9]+)' => 'post/delete/$1',
 
     '' => 'index/index'
 ];
