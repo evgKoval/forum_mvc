@@ -39,3 +39,39 @@ CREATE TABLE IF NOT EXISTS likes (
     post_id INT,
     user_id INT
 )  ENGINE=INNODB;
+
+CREATE TABLE IF NOT EXISTS categories (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL
+)  ENGINE=INNODB;
+
+CREATE TABLE IF NOT EXISTS sub_categories (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    parent INT NOT NULL
+)  ENGINE=INNODB;
+
+INSERT INTO categories (name) VALUES ('Music');
+INSERT INTO categories (name) VALUES ('Movies');
+INSERT INTO categories (name) VALUES ('Books');
+INSERT INTO categories (name) VALUES ('Sport');
+
+INSERT INTO sub_categories (name, parent) VALUES ('Rock', 1);
+INSERT INTO sub_categories (name, parent) VALUES ('Hip-hop', 1);
+INSERT INTO sub_categories (name, parent) VALUES ('Indie', 1);
+INSERT INTO sub_categories (name, parent) VALUES ('Classic', 1);
+
+INSERT INTO sub_categories (name, parent) VALUES ('Action', 2);
+INSERT INTO sub_categories (name, parent) VALUES ('Fantasy', 2);
+INSERT INTO sub_categories (name, parent) VALUES ('Drama', 2);
+INSERT INTO sub_categories (name, parent) VALUES ('Horror', 2);
+
+INSERT INTO sub_categories (name, parent) VALUES ('Fantasy', 3);
+INSERT INTO sub_categories (name, parent) VALUES ('Drama', 3);
+INSERT INTO sub_categories (name, parent) VALUES ('Crime and Detective', 3);
+INSERT INTO sub_categories (name, parent) VALUES ('Romance', 3);
+
+INSERT INTO sub_categories (name, parent) VALUES ('Football', 4);
+INSERT INTO sub_categories (name, parent) VALUES ('Basketball', 4);
+INSERT INTO sub_categories (name, parent) VALUES ('Volleyball', 4);
+INSERT INTO sub_categories (name, parent) VALUES ('Baseball', 4);
