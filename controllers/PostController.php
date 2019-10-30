@@ -55,7 +55,52 @@ class PostController
         return true;
     }
 
-    public function actionGetComments($id) {
+    public function actionEdit($id)
+    {
+        $post = Post::getPostById($id);
+
+        if (!Post::isMyPost($id)) {
+            header("Location: /");
+        } else {
+            $title = $post['post_title'];
+            $text = $post['post_text'];
+
+            if (isset($_POST['post_edit'])) {
+                $title = $_POST['post_title'];
+                $text = $_POST['post_text'];
+                
+                $errors = false;
+                
+                if ($title == '' || $text == '') {
+                    $errors[] = 'The fields must be filled';
+                }
+                
+                if ($errors == false) {
+                    Post::editPost($id, $title, $text);
+                }
+            }
+
+            require_once(ROOT . '/views/post/edit.php');
+
+            return true;
+        }
+    }
+
+    public function actionDelete($id)
+    {
+        if (!Post::isMyPost($id)) {
+            header("Location: /");
+        } else {
+            Post::deletePost($id);
+
+            header("Location: /");
+
+            return true;
+        }
+    }
+
+    public function actionGetComments($id) 
+    {
         $comments = Comment::getCommentsByPost($id); 
         
         echo json_encode($comments);
