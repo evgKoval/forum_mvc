@@ -28,6 +28,8 @@ $routes = [
 
     'get-preferences/([0-9]+)' => 'index/getPreferences/$1',
     'preferences' => 'index/preferences',
+    'search' => 'index/search',
+    'filtered' => 'index/filter',
     '' => 'index/index'
 ];
 
@@ -39,6 +41,10 @@ if (!empty($_SERVER['REQUEST_URI'])) {
 
 foreach($routes as $uriPattern => $path) {
     if (preg_match("~$uriPattern~", $uri)) {
+        if(strpos($uri, '?')) {
+            $uri = strstr($uri, '?', true);
+        }
+
         $internalRoute = preg_replace("~$uriPattern~", $path, $uri);
 
         $segments = explode('/', $internalRoute);

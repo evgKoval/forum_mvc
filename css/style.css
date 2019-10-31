@@ -48,3 +48,7 @@ footer {
 .preferences span:last-child::after {
     content: '';
 }
+
+.search {
+    width: 420px;
+}

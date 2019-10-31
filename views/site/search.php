@@ -1,20 +1,39 @@
-<?php include ROOT . '/views/layouts/header.php'; ?>
-    <?php if(!User::isGuest()) { ?>
-        <div>
-            <h5 class="preferences">
-                Your preferences:
-                <?php foreach($preferences as $preference) { ?>
-                    <span><?php if(isset($preference['name'])) echo $preference['name']; ?></span>
-                <?php } ?>
-            </h5>
-        </div>
-    <?php } ?>    
-    <h1 class="mb-3">All of posts</h1>
-    <?php if(!User::isGuest()) { ?>
-        <a href="/post/create" class="btn btn-primary">Create a post</a>
+<?php include ROOT . '/views/layouts/header.php'; ?>  
+    <?php if($query != '') { ?>
+        <span class="d-block">Your query</span>
+        <h3 class="d-block"><?php echo $query; ?></h3>
+        <hr>
     <?php } ?>
+    <form action="/filtered" class="row align-items-center mt-2">
+        <div class="col-1"><h5>Filters:</h5></div>
+        <div class="col-3">
+            <div class="form-group mb-0">
+                <select name="filter_category" class="form-control" id="filter_category">
+                    <option disabled selected>Choose category</option>
+                    <?php foreach($subCategories as $subCategory) { ?>
+                        <option value="<?php if(isset($subCategory['name'])) echo $subCategory['name']; ?>">
+                            <?php if(isset($subCategory['name'])) echo $subCategory['name']; ?>
+                        </option>
+                    <?php } ?>
+                </select>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="form-group mb-0">
+                <input class="form-control" type="date" name="filter_date" min="2019-01-01" max="2019-12-31">
+            </div>
+        </div>
+        <div class="col-3">
+            <button type="submit" class="btn btn-primary btn-block">Search with filters</button>
+        </div>
+    </form>
     <hr>
     <div class="row">
+        <div class="col-12">
+            <?php if($posts == []) { ?>
+                <h3>There are no posts with this query</h3>
+            <?php } ?>
+        </div>
         <?php foreach($posts as $post) { ?>
             <div class="col-12">
                 <div class="card mb-4">
