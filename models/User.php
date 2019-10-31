@@ -108,6 +108,21 @@ class User
         return false;
     }
 
+    public static function getUserDataById()
+    {
+        global $db;
+
+        $userId = $_SESSION['user']['user_id'];
+
+        $sql = 'SELECT * FROM users WHERE id = :id';
+
+        $result = $db->prepare($sql);
+        $result->bindParam(':id', $userId, PDO::PARAM_STR);
+        $result->execute();
+
+        return $result->fetch(PDO::FETCH_ASSOC);
+    }
+
     public static function confirmEmail($hash) 
     {
         global $db;
@@ -182,5 +197,25 @@ class User
         $preferences = $result->fetchAll(PDO::FETCH_ASSOC);
 
         return $preferences;
+    }
+
+    public static function editProfile($firstname, $lastname, $email, $password)
+    {
+        global $db;
+
+        $userId = $_SESSION['user']['user_id'];
+
+        $sql = 'UPDATE users SET first_name = :firstname, last_name = :lastname, email = :email, password = :password WHERE id = :id';
+        
+        $result = $db->prepare($sql);
+        $result->bindParam(':firstname', $firstname, PDO::PARAM_STR);
+        $result->bindParam(':lastname', $lastname, PDO::PARAM_STR);
+        $result->bindParam(':email', $email, PDO::PARAM_STR);
+        $result->bindParam(':password', $password, PDO::PARAM_STR);
+        $result->bindParam(':id', $userId, PDO::PARAM_STR);
+
+        $result->execute();
+
+        return $result->rowCount();
     }
 }

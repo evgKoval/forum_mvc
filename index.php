@@ -30,6 +30,7 @@ $routes = [
     'preferences' => 'index/preferences',
     'search' => 'index/search',
     'filtered' => 'index/filter',
+    'profile' => 'index/profile',
     '' => 'index/index'
 ];
 

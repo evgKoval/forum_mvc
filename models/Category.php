@@ -48,7 +48,8 @@ class Category
         return $subCategories;
     }
 
-    public static function addUserPreferences($category, $subCategory) {
+    public static function addUserPreferences($category, $subCategory) 
+    {
         global $db;
 
         $userId = $_SESSION['user']['user_id'];
@@ -59,6 +60,20 @@ class Category
         $result->bindParam(':user_id', $userId, PDO::PARAM_STR);
         $result->bindParam(':category', $category, PDO::PARAM_STR);
         $result->bindParam(':sub_category', $subCategory, PDO::PARAM_STR);
+
+        $result->execute();
+    }
+
+    public static function deleteUserPreferences() 
+    {
+        global $db;
+
+        $userId = $_SESSION['user']['user_id'];
+
+        $sql = 'DELETE FROM user_preferences WHERE user_id = :id';
+
+        $result = $db->prepare($sql);
+        $result->bindParam(':id', $userId, PDO::PARAM_STR);
 
         $result->execute();
     }

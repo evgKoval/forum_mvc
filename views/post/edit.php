@@ -1,6 +1,6 @@
 <?php include ROOT . '/views/layouts/header.php'; ?>
     <a href="/">← Back</a>
-    <h1 class="mb-4">Create a post</h1>
+    <h1 class="mb-4">Edit this post</h1>
     <form method="POST">
         <input type="hidden" name="post_edit">
         <div class="form-group">
