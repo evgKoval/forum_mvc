@@ -63,7 +63,11 @@ class IndexController
     }
 
     public function actionSearch() {
-        $query = $_GET['query'];
+        $query = isset($_GET['query']) ? $_GET['query'] : '';
+
+        // if ($query == '') {
+        //     header("Location: /");
+        // }
 
         $posts = [];
         $preferences = [];
@@ -76,8 +80,41 @@ class IndexController
             $posts = Post::getPostsBySearch($query);
         }
 
+        $subCategories = [];
+        $subCategories = Category::getSubCategories();
+
         require_once(ROOT . '/views/site/search.php');
 
         return true;   
+    }
+
+    public function actionFilter() {
+        $filters = [
+            'date' => isset($_GET['filter_date']) ? $_GET['filter_date'] : '',
+            'category' => isset($_GET['filter_category']) ? $_GET['filter_category'] : ''
+        ];
+
+        if ($filters['date'] == '' && $filters['category'] == '') {
+            header("Location: /search");
+        } else {
+            $posts = [];
+
+            if (!User::isGuest()) {
+                $preferences = User::getUserPreferences();
+
+                $posts = Post::getPostsByFilters($filters, $preferences);
+            } else {
+                $posts = Post::getPostsByFilters($filters);
+            }
+
+            $subCategories = [];
+            $subCategories = Category::getSubCategories();
+
+            require_once(ROOT . '/views/site/filter.php');
+
+            return true; 
+        }
+
+          
     }
 }

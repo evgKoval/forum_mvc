@@ -138,4 +138,42 @@ class Post
 
         return $posts;
     }
+
+    public static function getPostsByFilters($filters, $preferences = NULL) 
+    {
+        global $db;
+
+        $sql = "SELECT p.id, p.post_title, p.post_text, p.user_id, p.created_at, s.name FROM posts p LEFT JOIN sub_categories s ON p.post_category = s.id WHERE s.name = :category";
+
+        $date = $filters['date'];
+        $category = $filters['category'];
+
+        if ($date == '' && $category == '') {
+            $sql .= " OR p.created_at LIKE :date";
+        } else {
+            $sql .= " AND p.created_at LIKE :date";
+        }
+
+        if ($preferences) {
+            $stringPreferences = '';
+
+            foreach ($preferences as $preference) {
+                $stringPreferences .= "'" . $preference['name'] . "', ";
+            }
+
+            $stringPreferences = substr($stringPreferences, 0, -2);
+
+            $sql .= " ORDER BY FIELD(s.name, $stringPreferences) DESC";
+        }
+
+        $result = $db->prepare($sql);
+        $result->bindValue(':category', $category, PDO::PARAM_STR);
+        $result->bindValue(':date', "$date%", PDO::PARAM_STR);
+
+        $result->execute();
+
+        $posts = $result->fetchAll(PDO::FETCH_ASSOC);
+
+        return $posts;
+    }
 }

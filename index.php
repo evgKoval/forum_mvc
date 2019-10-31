@@ -29,6 +29,7 @@ $routes = [
     'get-preferences/([0-9]+)' => 'index/getPreferences/$1',
     'preferences' => 'index/preferences',
     'search' => 'index/search',
+    'filtered' => 'index/filter',
     '' => 'index/index'
 ];
 
