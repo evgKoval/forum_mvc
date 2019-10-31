@@ -10,6 +10,8 @@ class IndexController
         if (!User::isGuest()) {
             $preferences = [];
             $preferences = User::getUserPreferences();
+
+            $posts = Post::sortByPreferences($posts, $preferences);
         }
 
 		require_once(ROOT . '/views/site/index.php');
@@ -27,7 +29,7 @@ class IndexController
         $category = '';
         $subCategories = [];
 
-        if(isset($_POST['preferences'])) {
+        if (isset($_POST['preferences'])) {
             $category = $_POST['category'];
 
             $errors = false;

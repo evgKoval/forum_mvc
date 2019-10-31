@@ -16,7 +16,7 @@
     <hr>
     <div class="row">
         <?php foreach($posts as $post) { ?>
-            <div class="col-sm-4">
+            <div class="col-12">
                 <div class="card mb-4">
                     <div class="card-body">
                         <h5 class="card-title">
@@ -54,6 +54,5 @@
                 </div>
             </div>
         <?php } ?>
-        
     </div>
 <?php include ROOT . '/views/layouts/footer.php'; ?>

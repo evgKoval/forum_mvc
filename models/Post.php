@@ -98,4 +98,36 @@ class Post
 
         return $email['email'];
     }
+
+    public static function sortByPreferences($posts, $preferences)
+    {
+        $priorities = [];
+
+        for ($i = 0; $i < count($preferences); $i++) { 
+            $priorities[$preferences[$i]['name']] = [count($preferences) - $i];
+        }
+
+        uasort($posts, function($a, $b) use ($priorities) {
+            if (!isset($a['name'])) {
+                if (!isset($b['name'])) return -1;
+                return 1;
+            } else if(!isset($b['name'])) {
+                return -1;
+            }
+
+            if (isset($priorities[$a['name']])) {
+                if (!isset($priorities[$b['name']])) return -1;
+
+                if ($priorities[$a['name']] > $priorities[$b['name']]) return -1;
+                if ($priorities[$a['name']] < $priorities[$b['name']]) return 1;
+
+            } else if (isset($priorities[$b['name']])){
+                return 1;           
+            }
+
+            return 0;
+        });
+
+        return $posts;
+    }
 }
