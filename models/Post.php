@@ -2,11 +2,23 @@
 
 class Post 
 {
-    public static function getPosts() 
+    public static function getPosts($preferences = NULL) 
     {
         global $db;
 
-        $sql = 'SELECT p.id, p.post_title, p.post_text, p.user_id, p.created_at, s.name FROM posts p LEFT JOIN sub_categories s ON p.post_category = s.id';
+        $sql = "SELECT p.id, p.post_title, p.post_text, p.user_id, p.created_at, s.name FROM posts p LEFT JOIN sub_categories s ON p.post_category = s.id";
+
+        if ($preferences) {
+            $stringPreferences = '';
+
+            foreach ($preferences as $preference) {
+                $stringPreferences .= "'" . $preference['name'] . "', ";
+            }
+
+            $stringPreferences = substr($stringPreferences, 0, -2);
+
+            $sql .= " ORDER BY FIELD(s.name, $stringPreferences) DESC";
+        }
 
         $result = $db->prepare($sql);
 
@@ -99,34 +111,30 @@ class Post
         return $email['email'];
     }
 
-    public static function sortByPreferences($posts, $preferences)
+    public static function getPostsBySearch($query, $preferences = NULL) 
     {
-        $priorities = [];
+        global $db;
 
-        for ($i = 0; $i < count($preferences); $i++) { 
-            $priorities[$preferences[$i]['name']] = [count($preferences) - $i];
+        $sql = "SELECT p.id, p.post_title, p.post_text, p.user_id, p.created_at, s.name FROM posts p LEFT JOIN sub_categories s ON p.post_category = s.id WHERE post_title LIKE :query OR post_text LIKE :query";
+
+        if ($preferences) {
+            $stringPreferences = '';
+
+            foreach ($preferences as $preference) {
+                $stringPreferences .= "'" . $preference['name'] . "', ";
+            }
+
+            $stringPreferences = substr($stringPreferences, 0, -2);
+
+            $sql .= " ORDER BY FIELD(s.name, $stringPreferences) DESC";
         }
 
-        uasort($posts, function($a, $b) use ($priorities) {
-            if (!isset($a['name'])) {
-                if (!isset($b['name'])) return -1;
-                return 1;
-            } else if(!isset($b['name'])) {
-                return -1;
-            }
+        $result = $db->prepare($sql);
+        $result->bindValue(':query', "%$query%");
 
-            if (isset($priorities[$a['name']])) {
-                if (!isset($priorities[$b['name']])) return -1;
+        $result->execute();
 
-                if ($priorities[$a['name']] > $priorities[$b['name']]) return -1;
-                if ($priorities[$a['name']] < $priorities[$b['name']]) return 1;
-
-            } else if (isset($priorities[$b['name']])){
-                return 1;           
-            }
-
-            return 0;
-        });
+        $posts = $result->fetchAll(PDO::FETCH_ASSOC);
 
         return $posts;
     }

@@ -4,14 +4,15 @@ class IndexController
 {
 	public function actionIndex() 
 	{
-		$posts = [];
-		$posts = Post::getPosts();
+        $preferences = [];
+        $posts = [];
 
         if (!User::isGuest()) {
-            $preferences = [];
             $preferences = User::getUserPreferences();
 
-            $posts = Post::sortByPreferences($posts, $preferences);
+            $posts = Post::getPosts($preferences);
+        } else {
+            $posts = Post::getPosts();
         }
 
 		require_once(ROOT . '/views/site/index.php');
@@ -59,5 +60,24 @@ class IndexController
         echo json_encode($subCategories);
 
         return true;
+    }
+
+    public function actionSearch() {
+        $query = $_GET['query'];
+
+        $posts = [];
+        $preferences = [];
+
+        if (!User::isGuest()) {
+            $preferences = User::getUserPreferences();
+
+            $posts = Post::getPostsBySearch($query, $preferences);
+        } else {
+            $posts = Post::getPostsBySearch($query);
+        }
+
+        require_once(ROOT . '/views/site/search.php');
+
+        return true;   
     }
 }
