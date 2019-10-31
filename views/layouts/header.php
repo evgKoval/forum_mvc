@@ -24,7 +24,11 @@
                     </div>
                 <?php } else { ?>
                     <span class="mr-3"><?php if(isset($_SESSION['user']['email'])) echo $_SESSION['user']['email'] ?></span>
-                    <a href="/logout" class="btn btn-outline-dark">Logout</a>
+                    <div class="btn-group" role="group">
+                        <a href="/preferences" class="btn btn-outline-dark">Preferences</a>
+                        <a href="/profile" class="btn btn-outline-dark">Profile</a>
+                        <a href="/logout" class="btn btn-outline-dark">Logout</a>
+                    </div>
                 <?php } ?>
             </nav>
         </nav>

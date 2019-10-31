@@ -20,7 +20,8 @@ class IndexController
 		return true;
 	}
 
-    public function actionPreferences() {
+    public function actionPreferences() 
+    {
         $categories = [];
         $categories = Category::getCategories();
 
@@ -37,6 +38,8 @@ class IndexController
             
             if (isset($_POST['subcategory'])) {
                 $subCategories = $_POST['subcategory'];
+
+                Category::deleteUserPreferences();
 
                 foreach ($subCategories as $subCategory) {
                     Category::addUserPreferences($category, $subCategory);
@@ -62,7 +65,8 @@ class IndexController
         return true;
     }
 
-    public function actionSearch() {
+    public function actionSearch() 
+    {
         $query = isset($_GET['query']) ? $_GET['query'] : '';
 
         // if ($query == '') {
@@ -88,7 +92,8 @@ class IndexController
         return true;   
     }
 
-    public function actionFilter() {
+    public function actionFilter() 
+    {
         $filters = [
             'date' => isset($_GET['filter_date']) ? $_GET['filter_date'] : '',
             'category' => isset($_GET['filter_category']) ? $_GET['filter_category'] : ''
@@ -113,8 +118,55 @@ class IndexController
             require_once(ROOT . '/views/site/filter.php');
 
             return true; 
+        }   
+    }
+
+    public function actionProfile() 
+    {
+        $user = User::getUserDataById();
+
+        $firstname = $user['first_name'];
+        $lastname = $user['last_name'];
+        $email = $user['email'];
+        $password = $user['password'];
+
+        if (isset($_POST['profile'])) {            
+            $firstname = $_POST['firstname'];
+            $lastname = $_POST['lastname'];
+            $email = $_POST['email'];
+            $password = $_POST['password'];
+            
+            if ($password == '') {
+                $password = $user['password'];
+            }
+            
+            $errors = false;
+
+            if (!User::checkName($firstname)) {
+                $errors[] = 'First name doesn\'t be less 2 symbols' ;
+            }
+
+            if (!User::checkName($lastname)) {
+                $errors[] = 'First name doesn\'t be less 2 symbols' ;
+            }
+                        
+            if (!User::checkEmail($email)) {
+                $errors[] = 'Email is wrong';
+            }
+            
+            if ($errors == false) {
+                $result = User::editProfile($firstname, $lastname, $email, $password);
+                
+                if ($result) {
+                    header("Location: /");
+                } else {
+                    $errors[] = 'Something happened';
+                }
+            }
         }
 
-          
+        require_once(ROOT . '/views/site/profile.php');
+
+        return true;
     }
 }
