@@ -1,6 +1,3 @@
-<?php
-?>
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -14,8 +11,11 @@
 </head>
 <body>
     <header class="mb-3">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand mr-auto" href="/content">Blog</a>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-start">
+            <div class="d-flex mr-auto align-items-center">
+                <a class="navbar-brand" href="/">Blog</a>
+                <?php include ROOT . '/views/layouts/search.php'; ?>
+            </div>
             <nav>
                 <?php if(!isset($_SESSION['user'])) { ?>
                     <div class="btn-group" role="group">
