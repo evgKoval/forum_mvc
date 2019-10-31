@@ -37,17 +37,14 @@ footer {
     margin-bottom: 0;
 }
 
-.dataTables_wrapper .dataTables_paginate .paginate_button {
-    padding: 0;
-    margin-left: 0;
+.preferences {
+    font-weight: 400;
 }
 
-.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
-    background: none;
-    border: 1px solid transparent;
+.preferences span::after {
+    content: ',';
 }
 
-.dataTables_wrapper .dataTables_paginate .paginate_button:active {
-    background: none;
-    box-shadow: none;
+.preferences span:last-child::after {
+    content: '';
 }
