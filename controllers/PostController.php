@@ -47,7 +47,8 @@ class PostController
             }
 
             if ($errors == false) {
-                Post::createPost($title, $text, $category);
+                $newPostId = Post::createPost($title, $text, $category);
+                $_SESSION['user']['posts_id'][] = $newPostId;
 
                 header("Location: /");
             }

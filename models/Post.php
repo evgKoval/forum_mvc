@@ -6,7 +6,7 @@ class Post
     {
         global $db;
 
-        $sql = 'SELECT * FROM posts';
+        $sql = 'SELECT p.id, p.post_title, p.post_text, p.user_id, p.created_at, s.name FROM posts p LEFT JOIN sub_categories s ON p.post_category = s.id';
 
         $result = $db->prepare($sql);
 
@@ -37,7 +37,7 @@ class Post
     {
         global $db;
 
-        $userId = $_SESSION['user']['id'];
+        $userId = $_SESSION['user']['user_id'];
 
         $sql = 'INSERT INTO posts (post_title, post_text, post_category, user_id) ' . 'VALUES (:post_title, :post_text, :post_category, :user_id)';
 
@@ -48,6 +48,8 @@ class Post
         $result->bindParam(':user_id', $userId, PDO::PARAM_STR);
 
         $result->execute();
+
+        return $db->lastInsertId();
     }
 
     public static function editPost($postId, $title, $text) {

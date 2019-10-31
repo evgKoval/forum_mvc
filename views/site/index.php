@@ -24,12 +24,16 @@
                                 <?php if(isset($post['post_title'])) echo $post['post_title'] ?>
                             </a>
                         </h5>
+                        <?php if(isset($post['name'])) { ?>
+                            <span class="badge badge-primary d-inline-block mb-2"><?php echo $post['name'] ?></span>
+                        <?php } ?>
+                        
 
                         <small class="d-block mb-1"><?php if(isset($post['created_at'])) echo $post['created_at']; ?></small>
                         <p class="card-text">
                             <?php if(isset($post['post_text'])) echo $post['post_text'] ?>
                         </p>
-                        <?php if(isset($_SESSION['user']) && Post::isMyPost($post['id'])) { ?>
+                        <?php if(!User::isGuest() && Post::isMyPost($post['id'])) { ?>
                             <a href="/post/edit/<?php if(isset($post['id'])) echo $post['id'] ?>" class="btn btn-outline-warning">Edit</a>
                             <a href="/post/delete/<?php if(isset($post['id'])) echo $post['id'] ?>" class="btn btn-outline-danger">Delete</a>
                         <?php } ?>
