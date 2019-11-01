@@ -66,4 +66,35 @@ class Mailer
 
         $mail->send();
     }
+
+    public static function sendSpam($email, $postId, $postTitle)
+    {
+        var_dump($email);
+
+        require ROOT . '/phpmailer/config.php';
+
+        $mail = new PHPMailer\PHPMailer\PHPMailer();
+
+        $mail->isSMTP();   
+        $mail->CharSet    = $__smtp['charset'];                                          
+        $mail->SMTPAuth   = $__smtp['SMTPAuth'];
+
+        $mail->Host       = $__smtp['host'];
+        $mail->Username   = $__smtp['username'];
+        $mail->Password   = $__smtp['password'];
+        $mail->SMTPSecure = $__smtp['SMTPSecure'];
+        $mail->Port       = $__smtp['port'];
+        $mail->setFrom($__smtp['setFrom']['email'], $__smtp['setFrom']['name']);
+        $mail->isHTML($__smtp['isHTML']);
+
+        $mail->addAddress($email);
+
+        $mail->Subject = 'Check our new interesting post!';
+        $mail->Body    = "
+            Title: $postTitle<br>
+            http://forum_mvc.loc:8080/post/$postId
+        ";
+
+        $mail->send();
+    }
 }
